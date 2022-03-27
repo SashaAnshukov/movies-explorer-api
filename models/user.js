@@ -7,6 +7,7 @@ const UnauthorizedError = require('../errors/unauthorized-error');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
     minlength: 2,
     maxlength: 30,
   },
@@ -33,7 +34,7 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     .then((user) => {
       // console.log(email, user.email, password, user.password)
       if (!user) {
-        throw new UnauthorizedError('Пользователь не найден, необходима авторизация');
+        throw new UnauthorizedError('Неправильные почта или пароль');
       }
 
       return bcrypt

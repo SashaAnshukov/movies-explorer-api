@@ -5,6 +5,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
+const ForbiddenError = require('../errors/forbidden-error');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -73,7 +74,7 @@ module.exports.getUser = (request, response, next) => {
           data: user,
         });
       }
-      throw new NotFoundError('Пользователь по указанному id не найден');
+      throw new ForbiddenError (`Пользователь по указанному id ${request.user._id} не найден`);
     })
     .catch(next);
 };
@@ -94,6 +95,10 @@ module.exports.updateUser = (request, response, next) => User.findByIdAndUpdate(
   .catch((error) => {
     if (error.name === 'ValidationError') {
       next(new BadRequestError(`${Object.values(error.errors).map((err) => err.message).join(', ')}`));
+    } else if (error.code === 11000) {
+      next(new ConflictError
+        (`Пользователь с таким email - ${request.body.email} уже существует, введите другой email`)
+      );
     } else {
       next(error); // Для всех остальных ошибок
     }

@@ -44,6 +44,7 @@ module.exports.createMovie = (request, response, next) => {
     image,
     trailerLink,
     thumbnail,
+    movieId,
     nameRU,
     nameEN,
     owner,
