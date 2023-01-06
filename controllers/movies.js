@@ -5,15 +5,30 @@ const BadRequestError = require('../errors/bad-request-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
 // возвращает все фильмы
-module.exports.getMovies = (request, response, next) => Movie.find({})
+/*module.exports.getMovies = (request, response, next) => Movie.find({})
   .then((movies) => response.status(200).send({ data: movies }))
-  .catch(next);
+  .catch(next);*/
+
+module.exports.getMovies = (req, res, next) => {
+  const owner = req.user._id;
+
+  Movie.find({ owner })
+    .then((cards) => {
+      res.status(200).send(cards);
+    })
+    .catch((err) => {
+      throw new NotFoundError(err.message);
+    })
+    .catch(next);
+};
 
 // удаляет фильм по _id
 module.exports.deleteMovie = (request, response, next) => {
   const { id } = request.params;
   // console.log(request.params);
   // console.log(request.user._id);
+  console.log(typeof(id));
+  console.log(id);
   Movie.findById(id)
     .orFail(() => new NotFoundError(`Фильм с id ${id} не найден`))
     .then((movie) => {
@@ -31,7 +46,7 @@ module.exports.createMovie = (request, response, next) => {
   const {
     country, director, duration,
     year, description, image, trailerLink,
-    thumbnail, nameRU, nameEN,
+    thumbnail, movieId, nameRU, nameEN,
   } = request.body; // получим из объекта запроса название и ссылку фильма
   console.log(request.body);
   const owner = request.user._id;
