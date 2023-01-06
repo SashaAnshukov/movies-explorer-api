@@ -13,7 +13,8 @@ const { requestLogger, errorLogger } = require('./middleware/logger');
 const rateLimiter = require('./middleware/rateLimiter');
 const NotFoundError = require('./errors/not-found-error');
 
-const { PORT = 3001 } = process.env;
+//const { PORT = 3001 } = process.env;
+const { PORT = 10000 } = process.env;
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -24,11 +25,16 @@ app.use(rateLimiter);
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
-  'http://localhost:3001',
+  /*'http://localhost:3001',
   'http://jet.nomoredomains.work',
   'https://jet.nomoredomains.work',
   'http://api.jet.nomoredomains.work',
-  'https://api.jet.nomoredomains.work',
+  'https://api.jet.nomoredomains.work',*/
+  'http://localhost:10000',
+  'https://movies-expl.onrender.com',
+  'http://movies-expl.onrender.com',
+  'http://movies-f.onrender.com',
+  'https://movies-f.onrender.com'
 ];
 
 // безопасность

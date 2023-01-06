@@ -20,6 +20,20 @@ module.exports.createUser = (request, response, next) => {
     .then((hash) => User.create({
       name, email, password: hash,
     })) // создадим пользователя на основе пришедших данных
+    .then((user) => {
+      // создадим токен
+      // const token = jwt.sign({ _id: user._id }, 'super-strong-secret');
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+      // вернём токен
+      response
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          secure: true,
+          sameSite: 'none', // <-- Выключаем данную опцию
+        })
+        .send({ data: user.toJSON() });
+    })
     .then((user) => response.status(201).send(user))
     .catch((error) => {
       // console.log(error.name);
