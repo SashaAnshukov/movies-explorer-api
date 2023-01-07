@@ -29,10 +29,10 @@ const allowedCors = [
   'https://jet.nomoredomains.work',
   'http://api.jet.nomoredomains.work',
   'https://api.jet.nomoredomains.work',*/
-  'https://from-react-mesto-api.vercel.app',
-  'http://from-react-mesto-api.vercel.app',
-  'https://movies-expl.vercel.app',
-  'http://movies-expl.vercel.app'
+  'https://movies-expl.onrender.com',
+  'http://movies-expl.onrender.com',
+  'https://movies-f.onrender.com',
+  'https://movies-f.onrender.com'
 ];
 
 // безопасность
