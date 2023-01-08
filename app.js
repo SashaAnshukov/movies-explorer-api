@@ -65,7 +65,8 @@ app.use((req, res, next) => {
 app.use('/', userRoutes); // запускаем импортированные роуты
 app.use('/', movieRoutes); // запускаем импортированные роуты
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+//mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+mongoose.connect('mongodb://0.0.0.0:27017/bitfilmsdb');
 
 app.use((req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
