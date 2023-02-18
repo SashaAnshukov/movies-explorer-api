@@ -24,7 +24,7 @@ app.use(rateLimiter);
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
-  'http://localhost:3001',
+  'http://localhost:3000',
   'http://jet.nomoredomains.work',
   'https://jet.nomoredomains.work',
   'http://api.jet.nomoredomains.work',
